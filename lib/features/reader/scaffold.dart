@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:typed_data';
 import 'package:venera_next/components/settings_save_state.dart';
 
 import 'package:venera_next/features/reader/status_info.dart';
@@ -34,6 +35,8 @@ import 'package:venera_next/features/reader/settings_effects.dart';
 import 'package:venera_next/features/reader/settings_panel.dart';
 import 'package:venera_next/features/reader/image_selection.dart';
 import 'package:venera_next/features/reader/image_picker.dart';
+import 'package:venera_next/features/reader/image_read.dart';
+import 'package:venera_next/features/reader/ai_upscale_page.dart';
 import 'package:venera_next/foundation/log.dart';
 import 'package:venera_next/foundation/translations.dart';
 import 'package:venera_next/routing/settings.dart';
@@ -418,6 +421,7 @@ class ReaderScaffoldState extends State<ReaderScaffold> {
         },
       ),
       onChapters: widget.data.hasChapters ? openChapterDrawer : null,
+      onAiUpscale: aiUpscaleCurrentImage,
       onSave: saveCurrentImage,
       onShare: share,
     );
@@ -517,6 +521,45 @@ class ReaderScaffoldState extends State<ReaderScaffold> {
 
   void saveCurrentImage() => unawaited(_imageExporter.export(sharing: false));
   void share() => unawaited(_imageExporter.export(sharing: true));
+
+  Future<void> aiUpscaleCurrentImage() async {
+    final request = widget.createImageExport();
+    if (request == null || !request.isCurrent()) return;
+    final work = widget.imageWork;
+    final index = await _pickImage();
+    if (!mounted ||
+        !identical(widget.imageWork, work) ||
+        !request.isCurrent()) {
+      return;
+    }
+    final selection = request.resolve(index);
+    if (selection == null) return;
+    Uint8List? bytes;
+    try {
+      bytes = await readReaderImageBytes(selection.address);
+    } catch (error) {
+      if (mounted) context.showMessage(message: error.toString());
+      return;
+    }
+    if (bytes == null) {
+      if (mounted) {
+        context.showMessage(message: 'Image is no longer cached');
+      }
+      return;
+    }
+    final imageBytes = bytes;
+    if (!mounted) return;
+    final mode = await showAiUpscaleModeSheet(context);
+    if (mode == null || !mounted) return;
+    final filename =
+        '${selection.title}_EP${selection.chapter}_P${selection.imageNumber}.png';
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) =>
+            AiUpscalePage(bytes: imageBytes, filename: filename, mode: mode),
+      ),
+    );
+  }
 
   void openSetting() {
     final request = widget.createSettings();
