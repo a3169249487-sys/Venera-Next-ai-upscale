@@ -311,6 +311,13 @@ class ReaderScaffoldState extends State<ReaderScaffold> {
           ),
         ),
       Tooltip(
+        message: "AI Upscale".tl,
+        child: IconButton(
+          icon: const Icon(Icons.auto_awesome),
+          onPressed: () => unawaited(aiUpscaleCurrentImage()),
+        ),
+      ),
+      Tooltip(
         message: "Settings".tl,
         child: IconButton(
           icon: const Icon(Icons.settings),
@@ -421,7 +428,6 @@ class ReaderScaffoldState extends State<ReaderScaffold> {
         },
       ),
       onChapters: widget.data.hasChapters ? openChapterDrawer : null,
-      onAiUpscale: aiUpscaleCurrentImage,
       onSave: saveCurrentImage,
       onShare: share,
     );
