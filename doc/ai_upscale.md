@@ -1,13 +1,13 @@
 # AI 放大（实验）
 
-阅读器底栏新增 **AI Upscale** 按钮：对当前页做一次手动超分，结果在独立预览页中显示，可对比原图、保存或分享。它不接入正常翻页链路，也不会修改原图缓存。
+阅读器顶栏新增 **AI Upscale** 按钮：对当前页做一次手动超分，结果在独立预览页中显示，可对比原图、保存或分享。它不接入正常翻页链路，也不会修改原图缓存。
 
 这是实验功能，默认不参与阅读流程；处理大图时可能占用较多内存和时间。
 
 ## 入口
 
 1. 打开任意章节。
-2. 底栏点 ✨（AI Upscale）。
+2. 顶栏点 ✨（AI Upscale）。
 3. 选择模式：
    - **Anime4K 2x**：轻量、快，适合线条清晰的漫画。
    - **Anime4K 4x**：更慢、输出更大。
@@ -19,13 +19,11 @@
   - 解码原图 → RGBA
   - 在 worker isolate 中通过 `onnxruntime` 推理
   - 128px 分块 + 8px 重叠，块内取核心区域拼接
-  - 输出 PNG（`lodepng`）
+  - 输出 PNG（`image`）
 - `lib/features/reader/ai_upscale_page.dart`
   - 预览、原图/结果对比、保存、分享
-- `lib/features/reader/bottom_actions.dart`
-  - 新增可选 `onAiUpscale`
 - `lib/features/reader/scaffold.dart`
-  - 读取当前页字节并打开预览
+  - 顶栏新增 AI Upscale 入口，读取当前页字节并打开预览
 
 不做的事：
 
