@@ -69,6 +69,6 @@ python tool/convert_anime4k_to_f32.py \
 
 ## 已验证
 
-- lutter analyze：新增文件和修改文件无 issue。
-- lutter test test/features/reader/bottom_actions_test.dart：通过。
-- lutter test test/foundation/ai_upscale_runtime_test.dart：默认跳过；设置 AI_UPSCALE_RUNTIME_TEST=1 并对测试进程提供 ONNX Runtime 原生库后，三种模型都会在 16×16 输入上输出正确倍率。Windows 下可把 onnxruntime-1.4.1/windows 加入 PATH。
+- flutter analyze：新增文件和修改文件无 issue。
+- flutter test test/features/reader/bottom_actions_test.dart：通过。
+- flutter test test/foundation/ai_upscale_runtime_test.dart：默认跳过；设置 AI_UPSCALE_RUNTIME_TEST=1 并对测试进程提供 ONNX Runtime 原生库后，三种模型都会在 16×16 输入上输出正确倍率。Windows 下可把 onnxruntime-1.4.1/windows 加入 PATH。
