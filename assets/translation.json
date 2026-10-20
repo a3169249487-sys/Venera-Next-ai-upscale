@@ -1,5 +1,10 @@
 {
   "zh_CN": {
+    "AI Upscale": "AI 放大",
+    "Upscaling…": "正在放大…",
+    "Show result": "显示结果",
+    "Show original": "显示原图",
+    "Image is no longer cached": "图片已不在缓存中",
     "Connection interrupted. Waiting to retry...": "连接中断，等待自动重试…",
     "Download error": "下载错误",
     "Error details": "错误详情",
@@ -899,6 +904,11 @@
     "Failed to load source": "无法加载来源"
   },
   "zh_TW": {
+    "AI Upscale": "AI 放大",
+    "Upscaling…": "正在放大…",
+    "Show result": "顯示結果",
+    "Show original": "顯示原圖",
+    "Image is no longer cached": "圖片已不在快取中",
     "Connection interrupted. Waiting to retry...": "連線中斷，等待自動重試…",
     "Download error": "下載錯誤",
     "Error details": "錯誤詳情",
