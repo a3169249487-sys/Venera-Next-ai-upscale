@@ -80,3 +80,7 @@ ONNX Runtime、NCNN、TFLite 或 OpenCV 类方案可以提供更完整的一体�
 ## 当前结论
 
 图片增强可以作为桌面端实验功能继续预研，但不适合移动端默认启用，也不适合在功能稳定前写入 README 的正式功能介绍。
+
+## 2026-10 进展
+
+已按“手动增强当前图片”的方向加入了一个实验原型：阅读器底栏的 AI Upscale 入口、独立预览页、本地 ONNX 推理和 Anime4K／Waifu2x 模型。实现与限制见 [doc/ai_upscale.md](../ai_upscale.md)。
