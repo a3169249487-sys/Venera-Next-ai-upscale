@@ -116,6 +116,7 @@ void main() {
     bool desktop = false,
     bool android = false,
     bool chapters = true,
+    bool aiUpscale = false,
     bool selected = false,
     bool playing = false,
     bool collecting = false,
@@ -143,9 +144,33 @@ void main() {
       onPressed: () => calls.add('automatic'),
     ),
     onChapters: chapters ? () => calls.add('chapters') : null,
+    onAiUpscale: aiUpscale ? () => calls.add('aiUpscale') : null,
     onSave: () => calls.add('save'),
     onShare: () => calls.add('share'),
   );
+
+  testWidgets('AI upscale action is optional and dispatches once', (
+    tester,
+  ) async {
+    final calls = <String>[];
+    Future<void> mount({required bool aiUpscale}) => tester.pumpWidget(
+      MaterialApp(
+        home: Builder(
+          builder: (context) => Scaffold(
+            body: Row(children: actions(context, calls, aiUpscale: aiUpscale)),
+          ),
+        ),
+      ),
+    );
+
+    await mount(aiUpscale: false);
+    expect(find.byIcon(Icons.auto_awesome), findsNothing);
+    await mount(aiUpscale: true);
+    final button = find.byIcon(Icons.auto_awesome);
+    expect(button, findsOneWidget);
+    await tester.tap(button);
+    expect(calls, ['aiUpscale']);
+  });
 
   testWidgets(
     'failed status exposes keyboard retry without a false toggle state',
