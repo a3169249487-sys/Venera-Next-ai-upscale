@@ -31,7 +31,6 @@ List<Widget> buildReaderBottomActions(
   required VoidCallback onBrightness,
   required ReaderAutomaticReadingAction automaticReading,
   VoidCallback? onChapters,
-  VoidCallback? onAiUpscale,
   required VoidCallback onSave,
   required VoidCallback onShare,
 }) {
@@ -135,14 +134,6 @@ List<Widget> buildReaderBottomActions(
         child: IconButton(
           icon: const Icon(Icons.library_books),
           onPressed: onChapters,
-        ),
-      ),
-    if (onAiUpscale != null)
-      Tooltip(
-        message: "AI Upscale".tl,
-        child: IconButton(
-          icon: const Icon(Icons.auto_awesome),
-          onPressed: onAiUpscale,
         ),
       ),
     Tooltip(
